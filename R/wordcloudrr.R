@@ -30,10 +30,12 @@ col2hex <- function(col) {
 #' @param scale A vector of length 2 indicating the range of size of words as a ratio of width
 #' @param cols character vector of either hex RGB codes or color names in color()
 #' @param shape Shape of wordcloud, "circle", "triangle", "star"
+#' @param rot_per proportion words with rotation
 #' @param dir character, path to export the wordcloud, NULL is temp. dir
 #' @param width numeric, width of the wordcloud on canvas
 #' @param height numeric, height of the wordcloud on canvas
 #' @param auto_size logical, to adjust the size automatically according to scale and width
+#' @param bgcolor a hex RGB code or color name for background color
 #' @return Nothing
 #' @author Chung-hong Chan <chainsawtiney@gmail.com>, with wordcloud2.js written by timedream and TaffyDB.
 #' @examples
@@ -44,12 +46,12 @@ col2hex <- function(col) {
 #' wordcloudrr(words, freq, colors= col)
 #' }
 #' @export
-wordcloudrr <- function(words, freq, scale = c(0.1, 0.01), cols = '#000000', shape = 'circle', dir = NULL, width = 800, height = 800, auto_size = TRUE) {
+wordcloudrr <- function(words, freq, scale = c(0.1, 0.01), cols = '#000000', shape = 'circle', rot_per = 0, dir = NULL, width = 800, height = 800, auto_size = TRUE, bgcolor = '#FFFFFF') {
     cols <- sapply(cols, col2hex)
     if (auto_size) {
         freq <- (freq/max(freq)) * ((width * scale[1]) - (width * scale[2]))
     }
-    js_data <- export_data(list(data = data.frame(words = words, freq = freq, cols = cols), shape = shape))
+    js_data <- export_data(list(data = data.frame(words = words, freq = freq, cols = cols), shape = shape, bgcolor = col2hex(bgcolor), rot_per = rot_per))
     if (is.null(dir)) {
         dir <- tempdir()
     }

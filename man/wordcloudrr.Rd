@@ -5,8 +5,8 @@
 \title{Generate javascript wordcloud}
 \usage{
 wordcloudrr(words, freq, scale = c(0.1, 0.01), cols = "#000000",
-  shape = "circle", dir = NULL, width = 800, height = 800,
-  auto_size = TRUE)
+  shape = "circle", rot_per = 0, dir = NULL, width = 800,
+  height = 800, auto_size = TRUE, bgcolor = "#FFFFFF")
 }
 \arguments{
 \item{words}{character vector of words to be plotted}
@@ -19,6 +19,8 @@ wordcloudrr(words, freq, scale = c(0.1, 0.01), cols = "#000000",
 
 \item{shape}{Shape of wordcloud, "circle", "triangle", "star"}
 
+\item{rot_per}{proportion words with rotation}
+
 \item{dir}{character, path to export the wordcloud, NULL is temp. dir}
 
 \item{width}{numeric, width of the wordcloud on canvas}
@@ -26,6 +28,8 @@ wordcloudrr(words, freq, scale = c(0.1, 0.01), cols = "#000000",
 \item{height}{numeric, height of the wordcloud on canvas}
 
 \item{auto_size}{logical, to adjust the size automatically according to scale and width}
+
+\item{bgcolor}{a hex RGB code or color name for background color}
 }
 \value{
 Nothing

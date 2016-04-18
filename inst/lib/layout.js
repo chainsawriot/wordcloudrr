@@ -12,6 +12,8 @@ window.onload = function () {
 	list : wordcloudrr_list,
 	rotateRatio: 0,
 	shape: wordcloudrr_data['shape'][0],
+	rotateRatio: wordcloudrr_data['rot_per'][0],
+	backgroundColor: wordcloudrr_data['bgcolor'][0],
 	color: function(word, weight) {
 	    return query(word, weight)
 	}
