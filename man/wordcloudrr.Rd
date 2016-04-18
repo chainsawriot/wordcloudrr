@@ -4,23 +4,28 @@
 \alias{wordcloudrr}
 \title{Generate javascript wordcloud}
 \usage{
-wordcloudrr(words, freq, cols = "#000000", shape = "circle", dir = NULL,
-  width = 800, height = 800)
+wordcloudrr(words, freq, scale = c(0.1, 0.01), cols = "#000000",
+  shape = "circle", dir = NULL, width = 800, height = 800,
+  auto_size = TRUE)
 }
 \arguments{
 \item{words}{character vector of words to be plotted}
 
 \item{freq}{numeric vector of word frequency}
 
-\item{cols}{character vector of HTML RGB codes}
+\item{scale}{A vector of length 2 indicating the range of size of words as a ratio of width}
+
+\item{cols}{character vector of either hex RGB codes or color names in color()}
 
 \item{shape}{Shape of wordcloud, "circle", "triangle", "star"}
 
 \item{dir}{character, path to export the wordcloud, NULL is temp. dir}
 
-\item{width}{numeric, width of the wordcloud}
+\item{width}{numeric, width of the wordcloud on canvas}
 
-\item{height}{numeric, height of the wordcloud}
+\item{height}{numeric, height of the wordcloud on canvas}
+
+\item{auto_size}{logical, to adjust the size automatically according to scale and width}
 }
 \value{
 Nothing
@@ -32,8 +37,8 @@ A drop-in replacement for wordcloud() to generate javascript wordcloud.
 \dontrun{
 words <- c("hello", 'ngramrr', 'chainsawriot', 'weiborr', 'hkgovrr', 'xx')
 freq <- c(150, 80, 50,100, 20, 10)
-cols <- c("#FF0000", "#FF0000", "#FF0000", "#00FF00", "#00FF00", "#0000FF")
-wordcloudrr(words, freq, cols)
+cols <- c('red', 'violet', 'tomato4', "wheat2", "seagreen", "royalblue")
+wordcloudrr(words, freq, colors= col)
 }
 }
 \author{

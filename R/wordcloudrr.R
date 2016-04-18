@@ -11,6 +11,12 @@ gen_canvas <- function(width = 800, height = 800) {
     x <- gsub("##height##", height, x)
     return(x)
 }
+
+col2hex <- function(col) {
+    x <- col2rgb(col)
+    return(toupper(paste0("#", paste(sapply(x, function(z) format(as.hexmode(z), width = 2)), collapse = ""))))
+}
+
 #words <- c('中文', 'ngramrr', 'chainsawriot', 'weiborr', 'hkgovrr', 'xx')
 #freq <- c(150, 80, 50,100, 20, 10)
 #cols <- c("#FF0000", "#FF0000", "#FF0000", "#00FF00", "#00FF00", "#0000FF")
@@ -21,22 +27,28 @@ gen_canvas <- function(width = 800, height = 800) {
 #'
 #' @param words character vector of words to be plotted
 #' @param freq numeric vector of word frequency
-#' @param cols character vector of HTML RGB codes
+#' @param scale A vector of length 2 indicating the range of size of words as a ratio of width
+#' @param cols character vector of either hex RGB codes or color names in color()
 #' @param shape Shape of wordcloud, "circle", "triangle", "star"
 #' @param dir character, path to export the wordcloud, NULL is temp. dir
-#' @param width numeric, width of the wordcloud
-#' @param height numeric, height of the wordcloud
+#' @param width numeric, width of the wordcloud on canvas
+#' @param height numeric, height of the wordcloud on canvas
+#' @param auto_size logical, to adjust the size automatically according to scale and width
 #' @return Nothing
 #' @author Chung-hong Chan <chainsawtiney@gmail.com>, with wordcloud2.js written by timedream and TaffyDB.
 #' @examples
 #' \dontrun{
 #' words <- c("hello", 'ngramrr', 'chainsawriot', 'weiborr', 'hkgovrr', 'xx')
 #' freq <- c(150, 80, 50,100, 20, 10)
-#' cols <- c("#FF0000", "#FF0000", "#FF0000", "#00FF00", "#00FF00", "#0000FF")
-#' wordcloudrr(words, freq, cols)
+#' cols <- c('red', 'violet', 'tomato4', "wheat2", "seagreen", "royalblue")
+#' wordcloudrr(words, freq, colors= col)
 #' }
 #' @export
-wordcloudrr <- function(words, freq, cols = '#000000', shape = 'circle', dir = NULL, width = 800, height = 800) {
+wordcloudrr <- function(words, freq, scale = c(0.1, 0.01), cols = '#000000', shape = 'circle', dir = NULL, width = 800, height = 800, auto_size = TRUE) {
+    cols <- sapply(cols, col2hex)
+    if (auto_size) {
+        freq <- (freq/max(freq)) * ((width * scale[1]) - (width * scale[2]))
+    }
     js_data <- export_data(list(data = data.frame(words = words, freq = freq, cols = cols), shape = shape))
     if (is.null(dir)) {
         dir <- tempdir()
