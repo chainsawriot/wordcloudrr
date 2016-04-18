@@ -19,8 +19,6 @@ freq <- c(150, 80, 500,1000, 20, 10)
 cols <- c('red', 'violet', 'tomato4', "wheat2", "seagreen", "royalblue")
 wordcloudrr(words, freq, scale=c(0.3, 0.1), cols= cols, width = 1000, height = 1000)
 # a practical example, modified from wordcloud::wordcloud()
-require(tm)
-require(RColorBrewer)
 
 data(crude)
 crude <- tm_map(crude, removePunctuation)
@@ -29,7 +27,11 @@ tdm <- TermDocumentMatrix(crude)
 m <- as.matrix(tdm)
 v <- sort(rowSums(m),decreasing=TRUE)
 d <- data.frame(word = names(v),freq=v)
-cc <- brewer.pal(5, "Greens")[factor(cut(d$freq, c(0 ,1, 5, 10, 30, Inf)))]
+cc <- brewer.pal(5, "Blues")[factor(cut(d$freq, c(0 ,1, 5, 10, 30, Inf)))]
+
 ## the default auto_size is quite good already, you don't need to adjust the scale
-wordcloudrr(d$word,d$freq,cols = cc, shape = "star", width = 800, height = 600)
+wordcloudrr(d$word,d$freq,cols = cc, shape = "circle", width = 1000, height = 650)
+
+## Customize a little to make it more attractive
+wordcloudrr(d$word,d$freq,cols = cc, shape = "circle", width = 1000, height = 650, rot_per = 0.05, scale = c(0.3, 0.05), bgcolor = "#EFF3FF")
 ```
